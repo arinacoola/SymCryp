@@ -13,11 +13,16 @@ public class Main {
         int[] counts = Frequencies.countLetterFrequencies(cleanText);
         double H1 = Entropy.calcH1(counts, cleanText.length());
 
-        int[][] bigrams = Frequencies.countBigramsIntersecting(cleanText);
-        int n = cleanText.length() - 1;
-        double H2 = Entropy.calcH2Intersecting(bigrams, n);
+        int[][] bigramsIntersecting= Frequencies.countBigramsIntersecting(cleanText);
+        int n1 = cleanText.length() - 1;
+        double H2inter = Entropy.calcH2(bigramsIntersecting, n1);
 
-        System.out.println(cleanText.substring(0, 200));
-        System.out.println("Clean Length: " + cleanText.length());
+        int [][] bigramsNo=Frequencies.countBigramsNoIntersecting(cleanText);
+        int n2 = cleanText.length() / 2;
+        double H2no= Entropy.calcH2(bigramsNo, n2);
+
+        System.out.println("H1 = " + H1);
+        System.out.println("H2 (intersecting) = " + H2inter);
+        System.out.println("H2 (non-intersecting) = " + H2no);
     }
 }

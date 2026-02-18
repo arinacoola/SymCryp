@@ -10,7 +10,7 @@ public class Entropy {
         return H1;
     }
 
-    public static double calcH2Intersecting(int[][] bigramCounts, int n) {
+    public static double calcH2(int[][] bigramCounts, int n) {
         double tmp = 0;
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
