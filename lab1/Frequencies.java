@@ -4,7 +4,7 @@ public class Frequencies {
         for (char c :cleanText.toCharArray()){
             int ind=0;
             if(c==' '){
-                ind=31;
+                ind=32;
             }
             else{
                 ind = c - 'а';
