@@ -3,10 +3,12 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("bratia_karamazovy_-_fiedor_mikhailovich_dostoievskii.txt");
+        Path path = Paths.get("lab1/bratia_karamazovy_-_fiedor_mikhailovich_dostoievskii.txt");
         String readFile = Files.readString(path, Charset.forName("windows-1251"));
         String cleanText = TextFilter.filter(readFile);
         int l=cleanText.length();
@@ -43,5 +45,77 @@ public class Main {
         System.out.println("H2 inter = " + H2_32_inter);
         System.out.println("H2 non-inter = " + H2_32_no);
 
+
+        BufferedWriter wrtr = new BufferedWriter(new FileWriter("lab1/frequencies.txt"));
+        wrtr.write("WITH SPACES:\n");
+        frequencyOut(wrtr, counts33, l, true);
+        bigramOut(wrtr, bigrams33Intersecting, l - 1, true);
+        wrtr.write("NO SPACES:\n");
+        frequencyOut(wrtr, counts32, l1, false);
+        bigramOut(wrtr, bi32_inter, l1 - 1, false);
+        wrtr.close();
+    }
+
+    public static void frequencyOut(BufferedWriter wrtr, int[] counts,int total, boolean space) throws IOException {
+        wrtr.write("symbol \tnum \tfrequency\n");
+        boolean[] use = new boolean[counts.length];
+        for (int i = 0; i < counts.length; i++) {
+            int maxInd = -1;
+            for (int j = 0; j < counts.length; j++) {
+                if (!use[j] && counts[j] > 0) {
+                    if (maxInd == -1 || counts[j] > counts[maxInd]) {
+                        maxInd = j;
+                    }
+                }
+            }
+            if (maxInd == -1) {
+                break;
+            }
+            use[maxInd] = true;
+            char c;
+            if (space && maxInd == 32){
+                c = ' ';
+            }
+            else{
+                c = (char) ('а' + maxInd);
+            }
+            double p = (double) counts[maxInd] / total;
+            if (c == ' ') {
+                wrtr.write("space\t" + counts[maxInd] + "\t" + String.format("%.8f", p) + "\n");
+            }
+            else {
+                wrtr.write(c + "\t" + counts[maxInd] + "\t" + String.format("%.8f", p) + "\n");
+            }
+        }
+        wrtr.write("\n");
+    }
+
+    public static void bigramOut(BufferedWriter wrtr,int[][] bigrams, int total,boolean space) throws IOException {
+        int n = bigrams.length;
+        wrtr.write("bigram frequency matrix:\n");
+        wrtr.write("     ");
+        for (int i = 0; i < n; i++) {
+            if (space && i == 32) {
+                wrtr.write(String.format("%8s", "_"));
+            }
+            else {
+                wrtr.write(String.format("%8c", (char) ('а' + i)));
+            }
+        }
+        wrtr.write("\n");
+        for (int i = 0;i < n;i++) {
+            if (space && i == 32) {
+                wrtr.write(String.format("%4s ", "_"));
+            }
+            else {
+                wrtr.write(String.format("%4c ", (char) ('а' + i)));
+            }
+            for (int j = 0; j < n; j++) {
+                double p = (double) bigrams[i][j] / total;
+                wrtr.write(String.format("%8.6f", p));
+            }
+            wrtr.write("\n");
+        }
+        wrtr.write("\n");
     }
 }
