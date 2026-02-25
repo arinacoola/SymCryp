@@ -49,10 +49,17 @@ public class Main {
         BufferedWriter wrtr = new BufferedWriter(new FileWriter("lab1/frequencies.txt"));
         wrtr.write("WITH SPACES:\n");
         frequencyOut(wrtr, counts33, l, true);
+        wrtr.write("BIGRAMS INTERSECTING:\n");
         bigramOut(wrtr, bigrams33Intersecting, l - 1, true);
+        wrtr.write("BIGRAMS NON-INTERSECTING:\n");
+        bigramOut(wrtr, bigrams33No, l / 2, true);
+
         wrtr.write("NO SPACES:\n");
         frequencyOut(wrtr, counts32, l1, false);
+        wrtr.write("BIGRAMS INTERSECTING:\n");
         bigramOut(wrtr, bi32_inter, l1 - 1, false);
+        wrtr.write("BIGRAMS NON-INTERSECTING:\n");
+        bigramOut(wrtr, bi32_no, l1 / 2, false);
         wrtr.close();
     }
 
@@ -92,7 +99,7 @@ public class Main {
 
     public static void bigramOut(BufferedWriter wrtr,int[][] bigrams, int total,boolean space) throws IOException {
         int n = bigrams.length;
-        wrtr.write("bigram frequency matrix:\n");
+        wrtr.write("(frequency matrix)\n");
         wrtr.write("     ");
         for (int i = 0; i < n; i++) {
             if (space && i == 32) {
