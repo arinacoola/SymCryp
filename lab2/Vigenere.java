@@ -57,6 +57,14 @@ public class Vigenere {
             char c = mostFrequentChar(blocks[i]);
             System.out.println("block " + i + ": " + c);
         }
+        StringBuilder roughKey = new StringBuilder();
+        for (int i = 0; i < blocks.length; i++) {
+            char blockCh = mostFrequentChar(blocks[i]);
+            char keyCh = getKeyChar(blockCh, 'о');
+            roughKey.append(keyCh);
+        }
+        System.out.println();
+        System.out.println("rough key: " + roughKey);
     }
 
     private static String norm(String text) {
