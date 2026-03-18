@@ -98,11 +98,18 @@ public class Vigenere {
             roughKey.append(keyCh);
         }
         System.out.println();
-        System.out.println("rough key: " + roughKey);
+        System.out.println("rough key (most frequent letter method): " + roughKey);
         String roughPlain = decrypt(var6, roughKey.toString());
         System.out.println();
         System.out.println("decryption with rough key:");
         System.out.println(roughPlain.substring(0, Math.min(500, roughPlain.length())));
+        String mKey = keyByM(blocks);
+        System.out.println();
+        System.out.println("key by M(g): " + mKey);
+        String mPlain = decrypt(var6, mKey);
+        System.out.println();
+        System.out.println("decryption with key by M(g):");
+        System.out.println(mPlain.substring(0, Math.min(500, mPlain.length())));
     }
 
     private static String norm(String text) {
@@ -188,6 +195,48 @@ public class Vigenere {
         int x = ALPHABET.indexOf(assumedCh);
         int k = (y - x + M) % M;
         return ALPHABET.charAt(k);
+    }
+
+    private static int[] countLetters(String text) {
+        int[] counts = new int[M];
+        for (int i = 0; i < text.length(); i++) {
+            int idx = ALPHABET.indexOf(text.charAt(i));
+            if (idx != -1) {
+                counts[idx]++;
+            }
+        }
+        return counts;
+    }
+
+    private static double m(String block, int g) {
+        int[] counts = countLetters(block);
+        double sum = 0.0;
+        for (int t = 0; t < M; t++) {
+            int shift = (t + g) % M;
+            sum += FREQ[t] * counts[shift];
+        }
+        return sum;
+    }
+
+    private static char keyChM(String block) {
+        int bestG = 0;
+        double bestVal = m(block, 0);
+        for (int g = 1; g < M; g++) {
+            double cur = m(block, g);
+            if (cur > bestVal) {
+                bestVal = cur;
+                bestG = g;
+            }
+        }
+        return ALPHABET.charAt(bestG);
+    }
+
+    private static String keyByM(String[] blocks) {
+        StringBuilder key = new StringBuilder();
+        for (String block : blocks) {
+            key.append(keyChM(block));
+        }
+        return key.toString();
     }
 
     private static String decrypt(String text, String key) {
