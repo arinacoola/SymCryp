@@ -6,7 +6,7 @@ public class Vigenere {
     private static final String ALPHABET = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
     private static final int M = ALPHABET.length();
     public static void main(String[] args) throws IOException {
-        String text = Files.readString(Path.of("Chehov_Anton__Tolstyi_i_tonkii_www.Litmir.net_72388.txt"));
+        String text = Files.readString(Path.of("lab2/Chehov_Anton__Tolstyi_i_tonkii_www.Litmir.net_72388.txt"));
         text = norm(text);
         String[] keys = {
                 "он",
@@ -20,6 +20,17 @@ public class Vigenere {
             System.out.println("key: " + key + " (r=" + key.length() + ")");
             System.out.println(encrypted.substring(0, Math.min(150, encrypted.length())));
             System.out.println();
+        }
+
+        String testKey = "весна";
+        String testCipher = encrypt(text, testKey);
+
+        System.out.println("check period for key: " + testKey);
+        System.out.println();
+
+        for (int r = 2; r <= 30; r++) {
+            double avg = averageIndPeriod(testCipher, r);
+            System.out.printf("r = %2d  IoC = %.6f%n", r, avg);
         }
     }
 
