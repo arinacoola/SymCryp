@@ -34,16 +34,28 @@ public class Vigenere {
             double avg = averageIndPeriod(var6, r);
             System.out.printf("r = %2d  ind of coincidence = %.6f%n", r, avg);
         }
-
         String testKey = "весна";
         String testCipher = encrypt(text, testKey);
-
         System.out.println("check period for key: " + testKey);
         System.out.println();
-
         for (int r = 2; r <= 30; r++) {
             double avg = averageIndPeriod(testCipher, r);
             System.out.printf("r = %2d  ind of coincidence = %.6f%n", r, avg);
+        }
+        int keyLen = 17;
+        String[] blocks = splitBlocks(var6,keyLen);
+        System.out.println();
+        System.out.println("blocks for r = " + keyLen + ":");
+        System.out.println();
+        for (int i = 0; i < blocks.length; i++) {
+            System.out.println("block " + i + ":");
+            System.out.println(blocks[i]);
+            System.out.println();
+        }
+        System.out.println("most frequent chars in blocks: ");
+        for (int i = 0; i < blocks.length; i++) {
+            char c = mostFrequentChar(blocks[i]);
+            System.out.println("block " + i + ": " + c);
         }
     }
 
@@ -108,5 +120,27 @@ public class Vigenere {
             sum += indOfCoincidence(block);
         }
         return sum / r;
+    }
+
+    private static char mostFrequentChar(String text) {
+        int[] counts = new int[M];
+        for (int i = 0; i < text.length(); i++) {
+            int idx = ALPHABET.indexOf(text.charAt(i));
+            counts[idx]++;
+        }
+        int bestInd = 0;
+        for (int i = 1; i < M; i++) {
+            if (counts[i] > counts[bestInd]) {
+                bestInd = i;
+            }
+        }
+        return ALPHABET.charAt(bestInd);
+    }
+
+    private static char getKeyChar(char blockCh, char assumedCh) {
+        int y = ALPHABET.indexOf(blockCh);
+        int x = ALPHABET.indexOf(assumedCh);
+        int k = (y - x + M) % M;
+        return ALPHABET.charAt(k);
     }
 }
