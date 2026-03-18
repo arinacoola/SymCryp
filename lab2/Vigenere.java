@@ -65,6 +65,10 @@ public class Vigenere {
         }
         System.out.println();
         System.out.println("rough key: " + roughKey);
+        String roughPlain = decrypt(var6, roughKey.toString());
+        System.out.println();
+        System.out.println("decryption with rough key:");
+        System.out.println(roughPlain.substring(0, Math.min(500, roughPlain.length())));
     }
 
     private static String norm(String text) {
