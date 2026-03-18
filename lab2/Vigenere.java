@@ -8,6 +8,8 @@ public class Vigenere {
     public static void main(String[] args) throws IOException {
         String text = Files.readString(Path.of("lab2/Chehov_Anton__Tolstyi_i_tonkii_www.Litmir.net_72388.txt"));
         text = norm(text);
+        System.out.printf("open text ind of coincidence = %.6f%n", indOfCoincidence(text));
+        System.out.println();
         String[] keys = {
                 "он",
                 "лес",
@@ -17,7 +19,9 @@ public class Vigenere {
         };
         for (String key : keys) {
             String encrypted = encrypt(text, key);
+            double ioc = indOfCoincidence(encrypted);
             System.out.println("key: " + key + " (r=" + key.length() + ")");
+            System.out.printf("ind of coincidence = %.6f%n", ioc);
             System.out.println(encrypted.substring(0, Math.min(150, encrypted.length())));
             System.out.println();
         }
@@ -30,7 +34,7 @@ public class Vigenere {
 
         for (int r = 2; r <= 30; r++) {
             double avg = averageIndPeriod(testCipher, r);
-            System.out.printf("r = %2d  IoC = %.6f%n", r, avg);
+            System.out.printf("r = %2d  ind of coincidence = %.6f%n", r, avg);
         }
     }
 
