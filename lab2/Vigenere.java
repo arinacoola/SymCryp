@@ -151,4 +151,15 @@ public class Vigenere {
         int k = (y - x + M) % M;
         return ALPHABET.charAt(k);
     }
+
+    private static String decrypt(String text, String key) {
+        StringBuilder rslt = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            int y = ALPHABET.indexOf(text.charAt(i));
+            int k = ALPHABET.indexOf(key.charAt(i % key.length()));
+            int x = (y - k + M) % M;
+            rslt.append(ALPHABET.charAt(x));
+        }
+        return rslt.toString();
+    }
 }
