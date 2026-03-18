@@ -94,14 +94,14 @@ public class Vigenere {
         String roughPlain = decrypt(var6, roughKey.toString());
         System.out.println();
         System.out.println("decryption with rough key:");
-        System.out.println(roughPlain.substring(0, Math.min(500, roughPlain.length())));
+        System.out.println(roughPlain);
         String mKey = keyByM(blocks);
         System.out.println();
         System.out.println("key by M(g): " + mKey);
         String mPlain = decrypt(var6, mKey);
         System.out.println();
         System.out.println("decryption with key by M(g):");
-        System.out.println(mPlain.substring(0, Math.min(500, mPlain.length())));
+        System.out.println(mPlain);
     }
 
     private static String norm(String text) {
