@@ -78,14 +78,6 @@ public class Vigenere {
         }
         int keyLen = 17;
         String[] blocks = splitBlocks(var6,keyLen);
-        System.out.println();
-        System.out.println("blocks for r = " + keyLen + ":");
-        System.out.println();
-        for (int i = 0; i < blocks.length; i++) {
-            System.out.println("block " + i + ":");
-            System.out.println(blocks[i]);
-            System.out.println();
-        }
         System.out.println("most frequent chars in blocks: ");
         for (int i = 0; i < blocks.length; i++) {
             char c = mostFrequentChar(blocks[i]);
