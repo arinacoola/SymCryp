@@ -13,26 +13,26 @@ public class Main {
         String cleanText = TextFilter.filter(readFile);
         int l=cleanText.length();
 
-        int[] counts33 = Freq.countLetterFrequencies(cleanText);
+        int[] counts33 = Frequencies.countLetterFrequencies(cleanText);
         double H1_33 = Entropy.calcH1(counts33, cleanText.length());
 
-        int[][] bigrams33Intersecting= Freq.countBigramsIntersecting(cleanText);
+        int[][] bigrams33Intersecting= Frequencies.countBigramsIntersecting(cleanText);
         double H2_33_inter = Entropy.calcH2(bigrams33Intersecting, l-1);
 
-        int [][] bigrams33No= Freq.countBigramsNoIntersecting(cleanText);
+        int [][] bigrams33No= Frequencies.countBigramsNoIntersecting(cleanText);
         double H2_33_no= Entropy.calcH2(bigrams33No, l/2);
 
 
         String cleanNoSpace = cleanText.replace(" ", "");
         int l1=cleanNoSpace.length();
 
-        int[] counts32 = Freq.countLetterFrequenciesNoSpace(cleanNoSpace);
+        int[] counts32 = Frequencies.countLetterFrequenciesNoSpace(cleanNoSpace);
         double H1_32 = Entropy.calcH1(counts32, l1);
 
-        int[][] bi32_inter = Freq.countBigramsIntersectingNoSpace(cleanNoSpace);
+        int[][] bi32_inter = Frequencies.countBigramsIntersectingNoSpace(cleanNoSpace);
         double H2_32_inter = Entropy.calcH2(bi32_inter, l1 - 1);
 
-        int[][] bi32_no = Freq.countBigramsNoIntersectingNoSpace(cleanNoSpace);
+        int[][] bi32_no = Frequencies.countBigramsNoIntersectingNoSpace(cleanNoSpace);
         double H2_32_no = Entropy.calcH2(bi32_no, l1 / 2);
 
         System.out.println("WITH SPACES:");
