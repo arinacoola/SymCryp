@@ -59,7 +59,6 @@ public class Vigenere {
             System.out.println(encrypted.substring(0, Math.min(150, encrypted.length())));
             System.out.println();
         }
-
         String var6 = Files.readString(Path.of("lab2/var6.txt"));
         var6 = norm(var6);
         System.out.println("variant 6 period check:");
