@@ -11,10 +11,12 @@ public class Freq {
         }
         return bigrams;
     }
-    public static void top5Bigrams(int[][] bigrams, String alph) {
+
+    public static String[] topBigrams(int[][] bigrams, String alph, int top) {
         int m = alph.length();
-        for (int i = 0; i < 5; i++) {
-            int max = 0;
+        String[] res = new String[top];
+        for (int i = 0; i < top; i++) {
+            int max = -1;
             int b_i = -1, b_j = -1;
             for (int j = 0; j < m; j++) {
                 for (int k = 0; k < m; k++) {
@@ -25,9 +27,10 @@ public class Freq {
                     }
                 }
             }
-            System.out.println("" + alph.charAt(b_i) + alph.charAt(b_j) + " - " + max
-            );
+            res[i] = "" + alph.charAt(b_i) + alph.charAt(b_j);
+            System.out.println(res[i] + " - " + max);
             bigrams[b_i][b_j] = -1;
         }
+        return res;
     }
 }
